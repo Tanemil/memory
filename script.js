@@ -8,6 +8,8 @@ let controllo = []
 let n_col = 0;
 let n_cel = 0;
 
+let cliccable = true;
+
 /* function appendi_img(elemento , src_immagine){
     let img = document.createElement('img')
     img.src = src_immagine
@@ -79,10 +81,8 @@ for (let index = 0; index < 16; index++) {
     let elemento = document.getElementsByTagName('table')[0].getElementsByTagName('tr')[n_col].getElementsByTagName('td')[n_cel].getElementsByTagName('div')[0];
     elemento.style.cursor = 'pointer'
     elemento.onclick = function() {
-        if (controllo[0] == undefined){
-            if (this.style.opacity == ''){
-                this.style.opacity = 1
-                if (this.style.opacity == 1){
+        if (controllo[0] == undefined && cliccable){
+                if (this.style.opacity == 1 || this.style.opacity == ''){
                     this.style.opacity = 0;
                     controllo.push(this)
     /*                 if (controllo[0] == undefined){
@@ -97,51 +97,25 @@ for (let index = 0; index < 16; index++) {
                 } else{
                     this.style.opacity = 1; 
                 }
-            } else {
-                if (this.style.opacity == 1){
-                    this.style.opacity = 0;
-                    controllo.push(this)
-                } 
-
-            }
             
-        } else if(!(lista_caselle_corrette.includes(this.nextElementSibling.src))){
-
-            if (this.style.opacity == ''){
-                this.style.opacity = 1
-                if (this.style.opacity == 1){
+        } else if(!(lista_caselle_corrette.includes(this.nextElementSibling.src)) && cliccable){
+                if (this.style.opacity == 1 || this.style.opacity == ''){
                     this.style.opacity = 0;
                     if (controllo[0].nextElementSibling.src == this.nextElementSibling.src){
                         lista_caselle_corrette.push(controllo[0].nextElementSibling.src)
                         controllo.pop()
                     } else{
                         let variabile = this
+                        cliccable = false
                         setTimeout(function() {
+                            cliccable = true
                             variabile.style.opacity = 1
                             controllo[0].style.opacity = 1
                             controllo.pop()
-                          }, delayInMilliseconds);
+                            }, delayInMilliseconds);
+                        
                     }
                 } 
-            } else {
-                if (this.style.opacity == 1){
-                    this.style.opacity = 0;
-                    console.log(controllo[0].nextElementSibling.src , this.nextElementSibling.src)
-                    if (controllo[0].nextElementSibling.src == this.nextElementSibling.src){
-                        lista_caselle_corrette.push(controllo[0].nextElementSibling.src)
-                        controllo.pop()
-                    } else{
-                        let variabile = this
-                        setTimeout(function() {
-                            variabile.style.opacity = 1
-                            controllo[0].style.opacity = 1
-                            controllo.pop()
-                          }, delayInMilliseconds);
-                    }
-                } 
-            }
-
-
         }
     };
     n_cel += 1;
@@ -149,8 +123,10 @@ for (let index = 0; index < 16; index++) {
 
 function reset(){
     rimuovi_caselle(document.getElementsByTagName('table')[0] , 16)
+    cliccable = false;
     setTimeout(function() {
         seleziona_caselle(document.getElementsByTagName('table')[0] , 16 , img_equipment)
+        cliccable = true;
       }, 500);
     lista_caselle_corrette = []
     controllo = []
@@ -158,7 +134,6 @@ function reset(){
     n_col = 0;
     n_cel = 0;
 }
-
 
 
 

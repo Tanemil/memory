@@ -12,14 +12,14 @@ h1{
 
 body > div{
     text-align: center;
-    margin-top: 1%;
+    margin-top: 4rem;
 }
 
 table{
     display: flex;
     justify-content: center;
     align-content: center;
-    margin-top: 4%;
+    margin-top: 4rem;
 }
 
 table tr{
@@ -55,5 +55,18 @@ table tr td div{
     transition: opacity 0.5s ease-in-out;
 }
 
+button{
+    width: 12rem;
+    height: 4rem;
+    color: #E6CCB2;
+    background-color: #2e1f15;
+    border: none;
+    border-radius: 10px;
+    font-size: 2rem;
+}
+
+button:hover{
+    color: rgba(201,131,88,1) ;
+}
 
 
