@@ -1,4 +1,4 @@
-let img_equipment = ['assets/img/Equipment/bag.png','assets/img/Equipment/belt.png','assets/img/Equipment/helm.png','assets/img/Equipment/Iron Armor.png','assets/img/Equipment/iron boot.png','assets/img/Equipment/iron helmet.png','assets/img/Equipment/leather armor.png','assets/img/Equipment/leather boot.png'];
+let img_equipment = ['assets/img/Equipment/Bag.png','assets/img/Equipment/Belt.png','assets/img/Equipment/Helm.png','assets/img/Equipment/Iron Armor.png','assets/img/Equipment/Iron Boot.png','assets/img/Equipment/Iron Helmet.png','assets/img/Equipment/Leather Armor.png','assets/img/Equipment/Leather Boot.png'];
 
 var delayInMilliseconds = 600;
 
