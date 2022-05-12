@@ -32,7 +32,7 @@ function rimuovi_caselle(tabella , numero_di_caselle){
         var1.style.opacity = 1;
         setTimeout(function() {
             var2.remove();
-          }, 1000);
+          }, 500);
 
         n_cella += 1;
     }
@@ -151,7 +151,7 @@ function reset(){
     rimuovi_caselle(document.getElementsByTagName('table')[0] , 16)
     setTimeout(function() {
         seleziona_caselle(document.getElementsByTagName('table')[0] , 16 , img_equipment)
-      }, 1000);
+      }, 500);
     lista_caselle_corrette = []
     controllo = []
 
