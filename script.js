@@ -17,13 +17,13 @@ let controllo = []
 
 let dimensioni_randomiche = generatore_numeri_pari(12)
 
-let var_input = 4
+let fattore_ingrandimento = 6
 
 let n_col = 0;
 let n_cel = 0;
 
-let var_colonne 
-let var_righe 
+let var_colonne = 4
+let var_righe = 4
 
 let n_celle
 
@@ -255,16 +255,8 @@ function distruggi_tabella(){
 
 function generatore_tabella_casuale(){
     let variabile_table = document.getElementsByTagName('main')[0].getElementsByTagName('table')[0]
-    let numero = var_input
-    let n1_rand = numero
-    let n2_rand = numero
-    if (n1_rand < n2_rand) {
-        var_righe = n1_rand;
-        var_colonne = n2_rand;
-    } else{
-        var_righe = n2_rand;
-        var_colonne = n1_rand; 
-    }
+    var_righe 
+    var_colonne 
     let var_c = 0;
     let var_r = 0;
     for (let index = 0; index < var_righe; index++) {
@@ -275,6 +267,7 @@ function generatore_tabella_casuale(){
             let elemento_div_da_inserire_in_colonna = document.createElement('div')
             variabile_table.getElementsByTagName('tr')[var_r].appendChild(elemento_da_inserire_in_colonna)
             variabile_table.getElementsByTagName('tr')[var_r].getElementsByTagName('td')[var_c].appendChild(elemento_div_da_inserire_in_colonna)
+            variabile_table.getElementsByTagName('tr')[var_r].getElementsByTagName('td')[var_c].style.width = fattore_ingrandimento+'rem'
             var_c += 1
         }
         var_r += 1
@@ -285,7 +278,17 @@ function generatore_tabella_casuale(){
 }
 
 function imposta_tabella() {
-    var_input = +(document.getElementById('input').value)
+    var_righe = document.getElementById('righe').value
+    var_colonne = document.getElementById('colonne').value
+    if (var_righe < 6){
+        fattore_ingrandimento = 6
+    } else if (var_righe < 8){
+        fattore_ingrandimento = 5.5
+    }else if (var_righe < 10){
+        fattore_ingrandimento = 4.5
+    }else if (var_righe >= 10){
+        fattore_ingrandimento = 4
+    }
     console.log(document.getElementsByTagName('input'))
     distruggi_tabella()
 }
