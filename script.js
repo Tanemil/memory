@@ -8,28 +8,55 @@ let potion = ['assets/img/Potion/Blue Potion 2.png','assets/img/Potion/Blue Poti
 let weapon_tool = ['assets/img/Weapon & Tool/Arrow.png','assets/img/Weapon & Tool/Axe.png','assets/img/Weapon & Tool/Bow.png','assets/img/Weapon & Tool/Emerald Staff.png','assets/img/Weapon & Tool/Golden Sword.png','assets/img/Weapon & Tool/Hammer.png','assets/img/Weapon & Tool/Iron Shield.png','assets/img/Weapon & Tool/Iron Sword.png','assets/img/Weapon & Tool/Knife.png','assets/img/Weapon & Tool/Magic Wand.png','assets/img/Weapon & Tool/Pickaxe.png','assets/img/Weapon & Tool/Ruby Staff.png','assets/img/Weapon & Tool/Sapphire Staff.png','assets/img/Weapon & Tool/Shovel.png','assets/img/Weapon & Tool/Silver Sword.png','assets/img/Weapon & Tool/Topaz Staff.png','assets/img/Weapon & Tool/Torch.png','assets/img/Weapon & Tool/Wooden Shield.png','assets/img/Weapon & Tool/Wooden Staff.png','assets/img/Weapon & Tool/Wooden Sword.png']
 
 let somma_liste = [img_equipment,img_food,img_material,img_misc,img_monster_part,ore_gem,potion,weapon_tool]
+let somma_liste1 = concatena_liste(somma_liste);
 
 var delayInMilliseconds = 600;
 
 let lista_caselle_corrette = []
 let controllo = []
 
+let dimensioni_randomiche = generatore_numeri_pari(12)
+
+let var_input = 4
+
 let n_col = 0;
 let n_cel = 0;
 
+let var_colonne 
+let var_righe 
+
+let n_celle
+
 let cliccable = true;
 
-function seleziona_lista(lista_liste){
-    lista_risultato = []
-    let lista_casuale = [...lista_liste[Math.floor(Math.random()*lista_liste.length)]]
-    for (let index = 0; index < 8; index++) {
-        variabile_lista = lista_casuale[Math.floor(Math.random()*lista_casuale.length)]
-        while (lista_risultato.includes(variabile_lista)) {
-            variabile_lista = lista_casuale[Math.floor(Math.random()*lista_casuale.length)]
-            console.log('loop')
+generatore_tabella_casuale()
+
+function concatena_liste(lista){
+    let lista_r = []
+    for (let index = 0; index < lista.length; index++) {
+        for (let i = 0; i < lista[index].length; i++) {
+            lista_r.push(lista[index][i])
         }
-        lista_risultato.push(variabile_lista)
     }
+    return lista_r
+}
+
+function seleziona_lista(lista_liste){
+    let lista_risultato = []
+    let lista_casuale = [...lista_liste]
+    for (let index = 0; index < n_celle/2; index++) {
+        let a1 = lista_casuale[Math.floor(Math.random()*lista_casuale.length)];
+        variabile_lista = a1;
+        lista_risultato.push(variabile_lista)
+        lista_casuale.splice(lista_casuale.indexOf(a1),1)
+    }
+/*     while (lista_risultato.size < n_celle/2) {
+        let a1 = lista_casuale[Math.floor(Math.random()*lista_casuale.length)];
+        variabile_lista = a1;
+        lista_risultato.add(variabile_lista)
+        lista_casuale.splice(lista_casuale.indexOf(a1),1)
+        console.log(lista_risultato)
+    } */
     return lista_risultato
 }
 
@@ -48,7 +75,7 @@ function rimuovi_caselle(tabella , numero_di_caselle){
     let n_colonna = 0;
 
     for (let index = 0; index < numero_di_caselle; index++) {
-        if (n_cella == 4){
+        if (n_cella == var_colonne){
             n_colonna += 1;
             n_cella = 0;
         }
@@ -75,7 +102,7 @@ function seleziona_caselle(tabella , numero_di_caselle , lista_immagini){
         let i = lista_rimischiata.pop();
         let img = document.createElement('img');
         img.src = i;
-        if (n_cella == 4){
+        if (n_cella == var_colonne){
             n_colonna += 1;
             n_cella = 0;
         }
@@ -94,10 +121,8 @@ function shuffle(lista){
     return r_lista;
 }
 
-seleziona_caselle(document.getElementsByTagName('table')[0] , 16 , seleziona_lista(somma_liste))
-
-for (let index = 0; index < 16; index++) {
-    if (n_cel == 4){
+for (let index = 0; index < n_celle; index++) {
+    if (n_cel == var_colonne){
         n_col += 1;
         n_cel = 0;
     }
@@ -144,11 +169,12 @@ for (let index = 0; index < 16; index++) {
     n_cel += 1;
 }
 
+
 function reset(){
-    rimuovi_caselle(document.getElementsByTagName('table')[0] , 16)
+    rimuovi_caselle(document.getElementsByTagName('table')[0] , n_celle)
     cliccable = false;
     setTimeout(function() {
-        seleziona_caselle(document.getElementsByTagName('table')[0] , 16 , seleziona_lista(somma_liste))
+        seleziona_caselle(document.getElementsByTagName('table')[0] , n_celle , seleziona_lista(somma_liste1))
         cliccable = true;
       }, 500);
     lista_caselle_corrette = []
@@ -158,7 +184,111 @@ function reset(){
     n_cel = 0;
 }
 
+function generatore_numeri_pari(n){
+    let variabile_n = Math.floor(Math.random()*n);
+    while (variabile_n < 4) {
+        variabile_n = Math.floor(Math.random()*n)
+    }
+    if (variabile_n % 2 == 0){
+        return variabile_n
+    }
+    return variabile_n+1
+}
 
+function distruggi_tabella(){
+    n_col = 0;
+    n_cel = 0;
+    document.getElementsByTagName('main')[0].getElementsByTagName('table')[0].remove()
+    let b = document.createElement('table')
+    document.getElementsByTagName('body')[0].getElementsByTagName('main')[0].appendChild(b)
+    generatore_tabella_casuale()
+    for (let index = 0; index < n_celle; index++) {
+        if (n_cel == var_colonne){
+            n_col += 1;
+            n_cel = 0;
+        }
+        let elemen = document.getElementsByTagName('table')[0].getElementsByTagName('tr')[n_col].getElementsByTagName('td')[n_cel].getElementsByTagName('div')[0]
+        console.log(elemen)
+        elemen.style.cursor = 'pointer'
+        elemen.onclick = function() {
+            if (controllo[0] == undefined && cliccable){
+                    if (this.style.opacity == 1 || this.style.opacity == ''){
+                        this.style.opacity = 0;
+                        controllo.push(this)
+        /*                 if (controllo[0] == undefined){
+                            controllo.push(this)
+                        } else{
+                            if (controllo === this){
+                                lista_caselle_corrette.push(controllo[0])
+                                controllo.pop()
+                                lista_caselle_corrette.push(this)
+                            }
+                        }  */
+                    } else{
+                        this.style.opacity = 1; 
+                    }
+                
+            } else if(!(lista_caselle_corrette.includes(this.nextElementSibling.src)) && cliccable){
+                    if (this.style.opacity == 1 || this.style.opacity == ''){
+                        this.style.opacity = 0;
+                        if (controllo[0].nextElementSibling.src == this.nextElementSibling.src){
+                            lista_caselle_corrette.push(controllo[0].nextElementSibling.src)
+                            controllo.pop()
+                        } else{
+                            let variabile = this
+                            cliccable = false
+                            setTimeout(function() {
+                                cliccable = true
+                                variabile.style.opacity = 1
+                                controllo[0].style.opacity = 1
+                                controllo.pop()
+                                }, delayInMilliseconds);
+                            
+                        }
+                    } 
+            }
+        };
+        n_cel += 1;
+    }
+    n_col = 0;
+}
+
+function generatore_tabella_casuale(){
+    let variabile_table = document.getElementsByTagName('main')[0].getElementsByTagName('table')[0]
+    let numero = var_input
+    let n1_rand = numero
+    let n2_rand = numero
+    if (n1_rand < n2_rand) {
+        var_righe = n1_rand;
+        var_colonne = n2_rand;
+    } else{
+        var_righe = n2_rand;
+        var_colonne = n1_rand; 
+    }
+    let var_c = 0;
+    let var_r = 0;
+    for (let index = 0; index < var_righe; index++) {
+        let elemento_da_inserire_in_riga = document.createElement('tr')
+        variabile_table.appendChild(elemento_da_inserire_in_riga)
+        for (let index = 0; index < var_colonne; index++) {
+            let elemento_da_inserire_in_colonna = document.createElement('td')
+            let elemento_div_da_inserire_in_colonna = document.createElement('div')
+            variabile_table.getElementsByTagName('tr')[var_r].appendChild(elemento_da_inserire_in_colonna)
+            variabile_table.getElementsByTagName('tr')[var_r].getElementsByTagName('td')[var_c].appendChild(elemento_div_da_inserire_in_colonna)
+            var_c += 1
+        }
+        var_r += 1
+        var_c = 0
+    }
+    n_celle = var_colonne*var_righe
+    seleziona_caselle(document.getElementsByTagName('table')[0] , n_celle , seleziona_lista(somma_liste1))
+}
+
+function imposta_tabella() {
+    var_input = +(document.getElementById('input').value)
+    console.log(document.getElementsByTagName('input'))
+    distruggi_tabella()
+}
 
 
 
